@@ -1,0 +1,31 @@
+﻿@model MovieAppCore.Entity.Models.UserInfo
+
+<h2>Login</h2>
+<hr />
+<form method="post">
+    <div class="form-group">
+        <label for="Firstname">Email</label>
+        <input type="text" class="form-control" asp-for="Email">
+    </div>
+    <div class="form-group">
+        <label for="Firstname">Password</label>
+        <input type="text" class="form-control" asp-for="Password">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Login">
+    <button type="button" class="btn btn-secondary">Reset</button>
+    <hr />
+    @if (ViewBag.status == "Ok")
+    {
+        <div class="alert alert-success">
+            @ViewBag.message
+        </div>
+    }
+    else if (ViewBag.status == "Error")
+    {
+        <div class="alert alert-danger">
+            @ViewBag.message
+        </div>
+    }
+    <hr />
+    <a asp-controller="User" asp-action="Register">Register</a>
+</form>

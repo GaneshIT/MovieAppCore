@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MovieAppCore.Entity.Models.Movie>
+
+<div class="row">
+    <div class="col-12">
+        <h3>Movies</h3>
+        <hr />
+        <table class="table table-light table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Movie Id</th>
+                    <th>Movie Name</th>
+                    <th>Movie Description</th>
+                    <th>Movie Type</th>
+                    <th>Movie Language</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    </tr>
+            </thead>
+            <tbody>
+                @foreach (var movie in Model)
+                {
+                    <tr><td>@movie.MovieId</td>
+                        <td>@movie.MovieName</td>
+                        <td>@movie.MovieDescription</td>
+                        <td>@movie.MovieType</td>
+                        <td>@movie.MovieLanguage</td>
+                <td><a asp-controller="Movies" asp-action="EditMovie" asp-route-MovieId="@movie.MovieId">Edit</a></td>
+                <td><a asp-controller="Movies" asp-action="DeleteMovie" asp-route-MovieId="@movie.MovieId">Delete</a></td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
