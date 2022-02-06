@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppCore.BAL.services;
 using MovieAppCore.Entity.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace MovieAppCoreApi.Controllers
 {
     //localhost:23232/api/movies/GetMovies
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -24,6 +26,8 @@ namespace MovieAppCoreApi.Controllers
         {
            return _movieService.GetMovies();
         }
+
+        
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody]Movie movie)
         {

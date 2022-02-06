@@ -4,6 +4,7 @@ using MovieAppCore.Entity.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -45,6 +46,12 @@ namespace MovieAppCore.UI.Controllers
         public async Task<IActionResult> MovieEntry(Movie movie)
         {
             ViewBag.status = "";
+            if (Request.Form.Files.Count > 0)
+            {
+                MemoryStream ms = new MemoryStream();
+                Request.Form.Files[0].CopyTo(ms);
+                movie.ImgPoster = ms.ToArray();
+            }
             using (HttpClient client=new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(movie), Encoding.UTF8, "application/json");

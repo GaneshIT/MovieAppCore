@@ -1,7 +1,7 @@
 ﻿@model MovieAppCore.Entity.Models.Movie
 
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <h2>Movie Entry</h2><hr />
     <div class="form-group">
         <label>Movie Name</label>
@@ -19,6 +19,10 @@
         <label>Movie Language</label>
         <input type="text" asp-for="MovieLanguage" class="form-control" placeholder="enter movie language" required />
     </div>
+    <div class="form-group">
+        <label>Movie Poster</label>
+        <input type="file" id="poster" name="poster"  class="form-control" required />
+    </div>
     <input type="submit" value="Save" class="btn btn-outline-success" />
     <input type="button" value="Reset" class="btn btn-outline-secondary" />
     <hr />
@@ -28,7 +32,7 @@
             @ViewBag.message
         </div>
     }
-    else if(ViewBag.status == "Error")
+    else if (ViewBag.status == "Error")
     {
         <div class="alert alert-danger">
             @ViewBag.message

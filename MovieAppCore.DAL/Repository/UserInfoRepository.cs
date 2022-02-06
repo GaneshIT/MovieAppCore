@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//Token based authentication
+//1.JWT(JSON WEB TOKEN) token   2. OAUTH token
 namespace MovieAppCore.DAL.Repository
 {
     public class UserInfoRepository : IUserInfoRepository
