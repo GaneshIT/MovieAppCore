@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MovieAppCoreApi.Controllers
 {
     //localhost:23232/api/movies/GetMovies
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -21,25 +21,32 @@ namespace MovieAppCoreApi.Controllers
         {
             _movieService = movieService;
         }
+
         [HttpGet("GetMovies")]
         public IEnumerable<Movie> GetMovies()
         {
            return _movieService.GetMovies();
         }
+        [HttpGet("GetMovieById")]
+        public Movie GetMovieById(int movieId)
+        {
+            return _movieService.GetMovieByid(movieId);
+        }
 
-        
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody]Movie movie)
         {
             _movieService.AddMoive(movie);
             return Ok("Movie created successfully!!");
         }
-        [HttpDelete("DeleteMovie")]
+
+        [HttpDelete("DeleteMovie")]  
         public IActionResult DeleteMovie(int movieId)
         {
             _movieService.DeleteMovie(movieId);
             return Ok("Movie deleted successfully!!");
         }
+
         [HttpPut("UpdateMovie")]
         public IActionResult UpdateMovie([FromBody] Movie movie)
         {

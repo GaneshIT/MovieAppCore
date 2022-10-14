@@ -30,9 +30,9 @@ namespace MovieAppCore.BAL.services
             _movieRepository.DeleteMovie(movieId);
         }
         //Get GetMovieByid
-        public void GetMovieByid(int movieId)
+        public Movie GetMovieByid(int movieId)
         {
-            _movieRepository.GetMovieById(movieId);
+           return _movieRepository.GetMovieById(movieId);
         }
         //Get GetMovies
         public IEnumerable<Movie> GetMovies()

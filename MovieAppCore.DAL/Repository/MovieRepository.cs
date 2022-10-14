@@ -43,5 +43,6 @@ namespace MovieAppCore.DAL.Repository
             _movieDbContext.Entry(movie).State = EntityState.Modified;
             _movieDbContext.SaveChanges();
         }
+
     }
 }

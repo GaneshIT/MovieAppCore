@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<MovieAppCore.Entity.Models.Movie>
 
+
+    <div>
+        <hr />
+        <a asp-controller="Movies" asp-action="MovieEntry">Movie Entry</a>
+        <hr />
+    </div>
 <div class="row">
     <div class="col-12">
         <h3>Movies</h3>
@@ -30,11 +36,15 @@
                         <td>@movie.MovieDescription</td>
                         <td>@movie.MovieType</td>
                         <td>@movie.MovieLanguage</td>
-                <td><img src="@imageDataURL" /></td>
-                <td><a asp-controller="Movies" asp-action="EditMovie" asp-route-MovieId="@movie.MovieId">Edit</a></td>
-                <td><a asp-controller="Movies" asp-action="DeleteMovie" asp-route-MovieId="@movie.MovieId">Delete</a></td></tr>
+                <td><img height="50" width="50" src="@imageDataURL" /></td>
+                <td><a asp-controller="Movies" asp-action="EditMovie" 
+                    asp-route-MovieId="@movie.MovieId">Edit</a></td>
+                <td><a asp-controller="Movies" asp-action="DeleteMovie" 
+                    asp-route-MovieId="@movie.MovieId">Delete</a></td></tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+//http://localhost:34234/Movies/EditMovie?MoviedId=2

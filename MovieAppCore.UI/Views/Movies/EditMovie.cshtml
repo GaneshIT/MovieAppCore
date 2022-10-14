@@ -1,12 +1,11 @@
 ﻿@model MovieAppCore.Entity.Models.Movie
+@{
+    ViewData["Title"] = "EditMovie";
+}
 
-<div>
-        <hr />
-        <a asp-controller="Movies" asp-action="Index">Movie Entry</a>
-        <hr />
-    </div>
+<h1>EditMovie</h1>
+<hr />
 <form method="post" enctype="multipart/form-data">
-    <h2>Movie Entry</h2><hr />
     <div class="form-group">
         <label>Movie Name</label>
         <input type="text" asp-for="MovieName" class="form-control" 
@@ -46,23 +45,4 @@
         </div>
     }
 </form>
-
-@*<hr />
-<form>
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-    </div>
-    <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="button" class="btn btn-primary" asp-controller="User" asp-action="Login">Login</button>
-    <button type="button" class="btn btn-secondary">Reset</button>
-</form>*@
 

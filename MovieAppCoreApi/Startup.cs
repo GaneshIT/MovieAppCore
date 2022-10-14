@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MovieAppCore.BAL.services;
 using MovieAppCore.DAL.Data;
 using MovieAppCore.DAL.Repository;
@@ -49,9 +50,46 @@ namespace MovieAppCoreApi
             string connectionStr = Configuration.GetConnectionString("sqlConnection");
             services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionStr));
             services.AddControllers();
+            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Movie API",
+                    Description = "Movie Management System API",
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                          {
+                              Reference = new OpenApiReference
+                              {
+                                  Type = ReferenceType.SecurityScheme,
+                                  Id = "Bearer"
+                              }
+                          },
+                         new string[] {}
+                    }
+                });
+            });
             services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IShowTimingRepository, ShowTimingRepository>();
             services.AddTransient<IUserInfoRepository, UserInfoRepository>();
             services.AddTransient<MovieService, MovieService>();
+            services.AddTransient<ShowTimingService, ShowTimingService>();
+
             services.AddTransient<UserInfoService, UserInfoService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -76,6 +114,9 @@ namespace MovieAppCoreApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(options => 
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie API"));
 
             app.UseHttpsRedirection();
 
