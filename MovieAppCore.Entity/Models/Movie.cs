@@ -11,10 +11,16 @@ namespace MovieAppCore.Entity.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MovieId { get; set; }
+
+        [Required(ErrorMessage ="Movie name cannot be empty")]
         public string MovieName { get; set; }
+        [Required]
         public string MovieDescription { get; set; }
+        [Required]
         public string MovieType { get; set; }
+        [Required]
         public string MovieLanguage { get; set; }
+        [Required]
         public byte[] ImgPoster { get; set; }
     }
 }

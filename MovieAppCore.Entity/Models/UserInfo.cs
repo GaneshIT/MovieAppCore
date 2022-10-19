@@ -13,8 +13,12 @@ namespace MovieAppCore.Entity.Models
         public int UserId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public string Password { get; set; }
+
         public int Mobile { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using MovieAppCore.Entity.Models;
@@ -55,28 +56,31 @@ namespace MovieAppCore.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> MovieEntry(Movie movie)
         {
-            ViewBag.status = "";
-            if (Request.Form.Files.Count > 0)
+            if (ModelState.IsValid)
             {
-                MemoryStream ms = new MemoryStream();
-                Request.Form.Files[0].CopyTo(ms);
-                movie.ImgPoster = ms.ToArray();
-            }
-            using (HttpClient client = new HttpClient())
-            {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(movie), Encoding.UTF8, "application/json");
-                string endPoint = _configuration["WebApiBaseUrl"] + "Movies/AddMovie";
-                using (var response = await client.PostAsync(endPoint, content))
+                ViewBag.status = "";
+                if (Request.Form.Files.Count > 0)
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    MemoryStream ms = new MemoryStream();
+                    Request.Form.Files[0].CopyTo(ms);
+                    movie.ImgPoster = ms.ToArray();
+                }
+                using (HttpClient client = new HttpClient())
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(movie), Encoding.UTF8, "application/json");
+                    string endPoint = _configuration["WebApiBaseUrl"] + "Movies/AddMovie";
+                    using (var response = await client.PostAsync(endPoint, content))
                     {
-                        ViewBag.status = "Ok";
-                        ViewBag.message = "Movie details saved successfully!";
-                    }
-                    else
-                    {
-                        ViewBag.status = "Error";
-                        ViewBag.message = "Wrong entries!";
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            ViewBag.status = "Ok";
+                            ViewBag.message = "Movie details saved successfully!";
+                        }
+                        else
+                        {
+                            ViewBag.status = "Error";
+                            ViewBag.message = "Wrong entries!";
+                        }
                     }
                 }
             }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using MovieAppCore.BAL.services;
 using MovieAppCore.DAL.Data;
 using MovieAppCore.DAL.Repository;
+using MovieAppCoreApi.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +94,11 @@ namespace MovieAppCoreApi
 
             services.AddTransient<UserInfoService, UserInfoService>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
@@ -105,6 +111,8 @@ namespace MovieAppCoreApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
+            services.AddSingleton<IClaimsTransformation, ClaimsTransformer>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

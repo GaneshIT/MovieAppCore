@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 namespace MovieAppCoreApi.Controllers
 {
     //localhost:23232/api/movies/GetMovies
-    [Authorize]
+    /// <summary>
+    
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -21,7 +23,7 @@ namespace MovieAppCoreApi.Controllers
         {
             _movieService = movieService;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetMovies")]
         public IEnumerable<Movie> GetMovies()
         {
